@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Biodata Mahasantri</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            /* Palette Utama */
+            --primary: #00c1cb;
+            --primary-hover: #009ab8;
+            --dark-teal: #04586e;
+            --accent-yellow: #ffde59;
+            --accent-yellow-glow: rgba(255, 222, 89, 0.4);
+
+            /* Tema Dark (Default) */
+            --bg-glass: rgba(4, 30, 40, 0.72);
+            --bg-glass-card: rgba(6, 44, 57, 0.55);
+            --border-glass: rgba(0, 193, 203, 0.25);
+            --border-glass-focus: #00c1cb;
+            --text-main: #f0fdff;
+            --text-secondary: #9ed8e2;
+            --input-bg: rgba(2, 22, 31, 0.65);
+            --input-focus-bg: rgba(4, 36, 48, 0.85);
+            --card-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6), 0 0 30px rgba(0, 193, 203, 0.15);
+            --chip-bg: rgba(4, 40, 52, 0.5);
+            --chip-border: rgba(0, 193, 203, 0.2);
+            --toggle-bg: rgba(0, 193, 203, 0.15);
+        }
+
+        [data-theme="light"] {
+            /* Tema Light */
+            --bg-glass: rgba(255, 255, 255, 0.75);
+            --bg-glass-card: rgba(255, 255, 255, 0.82);
+            --border-glass: rgba(0, 154, 184, 0.28);
+            --border-glass-focus: #009ab8;
+            --text-main: #043644;
+            --text-secondary: #427280;
+            --input-bg: rgba(243, 251, 253, 0.9);
+            --input-focus-bg: #ffffff;
+            --card-shadow: 0 25px 50px -12px rgba(4, 88, 110, 0.25), 0 0 25px rgba(0, 193, 203, 0.18);
+            --chip-bg: rgba(235, 248, 250, 0.8);
+            --chip-border: rgba(0, 154, 184, 0.22);
+            --toggle-bg: rgba(4, 88, 110, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            transition: background-color 0.35s ease, border-color 0.35s ease, color 0.35s ease;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2.5rem 1rem;
+            position: relative;
+            overflow-x: hidden;
+            background: linear-gradient(
+                -45deg,
+                #04586e,
+                #004759,
+                #009ab8,
+                #00c1cb,
+                #04586e
+            );
+            background-size: 400% 400%;
+            animation: flowingGradient 14s ease infinite;
+        }
+
+        /* Latar Belakang Gradasi Bergerak */
+        @keyframes flowingGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Ornamen Partikel Halus (Aesthetic Glow) */
+        .ambient-glow {
+            position: fixed;
+            width: 450px;
+            height: 450px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 193, 203, 0.35) 0%, rgba(255, 222, 89, 0.12) 60%, transparent 80%);
+            filter: blur(80px);
+            z-index: 0;
+            pointer-events: none;
+            animation: pulseGlow 10s ease-in-out infinite alternate;
+        }
+
+        .glow-1 { top: -100px; left: -100px; }
+        .glow-2 { bottom: -120px; right: -100px; animation-delay: -5s; }
+
+        @keyframes pulseGlow {
+            0% { transform: scale(0.9) translate(0, 0); opacity: 0.6; }
+            100% { transform: scale(1.25) translate(40px, 30px); opacity: 0.9; }
+        }
+
+        /* Form Container (Glassmorphism) */
+        .glass-container {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 760px;
+            background: var(--bg-glass-card);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border-glass);
+            border-radius: 28px;
+            box-shadow: var(--card-shadow);
+            padding: 3rem 2.8rem;
+            color: var(--text-main);
+        }
+
+        /* Header & Top Bar */
+        .form-header-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .badge-academic {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(0, 193, 203, 0.15);
+            border: 1px solid rgba(0, 193, 203, 0.35);
+            color: var(--primary);
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 0.4rem 0.9rem;
+            border-radius: 999px;
+            margin-bottom: 0.6rem;
+        }
+
+        [data-theme="light"] .badge-academic {
+            color: #04586e;
+            background: rgba(0, 154, 184, 0.12);
+            border-color: rgba(0, 154, 184, 0.3);
+        }
+
+        .badge-academic i {
+            color: var(--accent-yellow);
+        }
+
+        .form-title {
+            font-size: 1.85rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            line-height: 1.25;
+            background: linear-gradient(120deg, var(--text-main) 60%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .form-subtitle {
+            font-size: 0.92rem;
+            color: var(--text-secondary);
+            margin-top: 0.35rem;
+        }
+
+        /* Dark / Light Mode Switcher */
+        .theme-toggle-btn {
+            background: var(--toggle-bg);
+            border: 1px solid var(--border-glass);
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-yellow);
+            font-size: 1.2rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            flex-shrink: 0;
+        }
+
+        .theme-toggle-btn:hover {
+            transform: scale(1.1) rotate(15deg);
+            border-color: var(--accent-yellow);
+            box-shadow: 0 0 20px var(--accent-yellow-glow);
+        }
+
+        /* Grid Layout */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.4rem;
+        }
+
+        .form-row-two {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+        }
+
+        @media (max-width: 640px) {
+            .form-row-two {
+                grid-template-columns: 1fr;
+            }
+            .glass-container {
+                padding: 2rem 1.4rem;
+                border-radius: 22px;
+            }
+            .form-title {
+                font-size: 1.45rem;
+            }
+        }
+
+        /* Form Group & Label */
+        .field-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .field-label {
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+        }
+
+        .field-label span {
+            color: var(--primary);
+        }
+
+        /* Modern Input Group with Icon Inside */
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 1.1rem;
+            color: var(--text-secondary);
+            font-size: 1rem;
+            transition: color 0.3s ease, transform 0.3s ease;
+            pointer-events: none;
+        }
+
+        .custom-input,
+        .custom-select,
+        .custom-textarea {
+            width: 100%;
+            background: var(--input-bg);
+            border: 1.5px solid var(--border-glass);
+            border-radius: 14px;
+            padding: 0.85rem 1rem 0.85rem 2.85rem;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text-main);
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .custom-input::placeholder,
+        .custom-textarea::placeholder {
+            color: var(--text-secondary);
+            opacity: 0.65;
+        }
+
+        .custom-input:focus,
+        .custom-select:focus,
+        .custom-textarea:focus {
+            background: var(--input-focus-bg);
+            border-color: var(--border-glass-focus);
+            box-shadow: 0 0 0 4px rgba(0, 193, 203, 0.2);
+            transform: translateY(-1px);
+        }
+
+        .input-wrapper:focus-within .input-icon {
+            color: var(--primary);
+            transform: scale(1.1);
+        }
+
+        /* Select Input */
+        .select-wrapper {
+            position: relative;
+        }
+
+        .custom-select {
+            padding-left: 2.85rem;
+            padding-right: 2.85rem;
+            appearance: none;
+            -webkit-appearance: none;
+            cursor: pointer;
+        }
+
+        .custom-select option {
+            background-color: #043644;
+            color: #ffffff;
+            padding: 10px;
+        }
+
+        [data-theme="light"] .custom-select option {
+            background-color: #ffffff;
+            color: #043644;
+        }
+
+        .select-arrow {
+            position: absolute;
+            right: 1.2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+            pointer-events: none;
+            transition: transform 0.3s ease;
+        }
+
+        .select-wrapper:focus-within .select-arrow {
+            color: var(--primary);
+            transform: translateY(-50%) rotate(180deg);
+        }
+
+        /* Modern Radio Cards (Jurusan) */
+        .radio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 0.9rem;
+        }
+
+        .custom-radio-card {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .custom-radio-card input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .radio-content {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            padding: 0.9rem 1.15rem;
+            background: var(--chip-bg);
+            border: 1.5px solid var(--chip-border);
+            border-radius: 14px;
+            transition: all 0.25s ease;
+        }
+
+        .radio-content i {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            transition: all 0.25s ease;
+        }
+
+        .radio-title {
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .custom-radio-card:hover .radio-content {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .custom-radio-card input[type="radio"]:checked + .radio-content {
+            background: rgba(0, 193, 203, 0.16);
+            border-color: var(--primary);
+            box-shadow: 0 0 16px rgba(0, 193, 203, 0.25);
+        }
+
+        .custom-radio-card input[type="radio"]:checked + .radio-content i {
+            color: var(--accent-yellow);
+            transform: scale(1.15);
+        }
+
+        .custom-radio-card input[type="radio"]:checked + .radio-content .radio-title {
+            color: var(--primary);
+        }
+
+        /* Modern Interactive Badges (Hobi Checkboxes) */
+        .hobi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 0.75rem;
+        }
+
+        .custom-checkbox-badge {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .custom-checkbox-badge input[type="checkbox"] {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .checkbox-box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            padding: 0.75rem 0.9rem;
+            background: var(--chip-bg);
+            border: 1.5px solid var(--chip-border);
+            border-radius: 12px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--text-main);
+            transition: all 0.25s ease;
+            user-select: none;
+        }
+
+        .checkbox-box i {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            transition: all 0.25s ease;
+        }
+
+        .custom-checkbox-badge:hover .checkbox-box {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .custom-checkbox-badge input[type="checkbox"]:checked + .checkbox-box {
+            background: rgba(0, 193, 203, 0.18);
+            border-color: var(--primary);
+            color: var(--primary);
+            box-shadow: 0 0 14px rgba(0, 193, 203, 0.2);
+        }
+
+        .custom-checkbox-badge input[type="checkbox"]:checked + .checkbox-box i {
+            color: var(--accent-yellow);
+            transform: scale(1.15);
+        }
+
+        /* Textarea */
+        .custom-textarea {
+            padding: 0.9rem 1.1rem;
+            min-height: 110px;
+            resize: vertical;
+            line-height: 1.5;
+        }
+
+        /* Submit Button */
+        .submit-section {
+            margin-top: 1rem;
+        }
+
+        .btn-submit {
+            position: relative;
+            width: 100%;
+            padding: 1.05rem 2rem;
+            background: linear-gradient(135deg, #00c1cb 0%, #009ab8 50%, #04586e 100%);
+            border: none;
+            border-radius: 16px;
+            color: #ffffff;
+            font-size: 1.05rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 193, 203, 0.35);
+            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+        }
+
+        .btn-submit::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 222, 89, 0.4),
+                transparent
+            );
+            transition: left 0.6s ease;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 14px 30px rgba(0, 193, 203, 0.5), 0 0 20px rgba(255, 222, 89, 0.35);
+        }
+
+        .btn-submit:hover::before {
+            left: 100%;
+        }
+
+        .btn-submit:active {
+            transform: translateY(0);
+        }
+
+        .btn-submit i {
+            transition: transform 0.3s ease;
+        }
+
+        .btn-submit:hover i {
+            transform: translateX(4px);
+        }
+
+        /* Success Notification Modal / Toast */
+        .toast-notify {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: rgba(4, 88, 110, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--accent-yellow);
+            color: #ffffff;
+            padding: 1rem 1.4rem;
+            border-radius: 14px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            z-index: 999;
+            transform: translateY(120px);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .toast-notify.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast-notify i {
+            color: var(--accent-yellow);
+            font-size: 1.3rem;
+        }
+    </style>
+</head>
+<body data-theme="dark">
+
+    <!-- Ambient Gradient Blobs -->
+    <div class="ambient-glow glow-1"></div>
+    <div class="ambient-glow glow-2"></div>
+
+    <!-- Main Glass Card Container -->
+    <div class="glass-container">
+        <!-- Header Section & Dark/Light Switcher -->
+        <header class="form-header-bar">
+            <div>
+                <div class="badge-academic">
+                    <i class="fa-solid fa-graduation-cap"></i> Portal Akademik
+                </div>
+                <h1 class="form-title">FORM BIODATA MAHASANTRI</h1>
+                <p class="form-subtitle">Lengkapi identitas diri dan preferensi pembelajaran Anda dengan akurat.</p>
+            </div>
+            <!-- Tombol Toggle Dark / Light Mode -->
+            <button type="button" id="themeToggle" class="theme-toggle-btn" aria-label="Ganti Mode Tema" title="Ganti Tema">
+                <i class="fa-solid fa-sun" id="themeIcon"></i>
+            </button>
+        </header>
+
+        <!-- Form Body -->
+        <form id="biodataForm" onsubmit="handleFormSubmit(event)">
+            <div class="form-grid">
+                
+                <!-- Nama Lengkap -->
+                <div class="field-group">
+                    <label for="nama" class="field-label">
+                        Nama Lengkap <span>*</span>
+                    </label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-address-book input-icon"></i>
+                        <input id="nama" name="nama" type="text" class="custom-input" placeholder="Masukkan nama lengkap Anda..." required>
+                    </div>
+                </div>
+
+                <!-- NIM & Email in 2 Columns -->
+                <div class="form-row-two">
+                    <!-- NIM -->
+                    <div class="field-group">
+                        <label for="nim" class="field-label">
+                            NIM (Nomor Induk) <span>*</span>
+                        </label>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-id-card input-icon"></i>
+                            <input id="nim" name="nim" type="text" class="custom-input" placeholder="cth: 202401004" required>
+                        </div>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="field-group">
+                        <label for="email" class="field-label">
+                            Email Aktif <span>*</span>
+                        </label>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-envelope input-icon"></i>
+                            <input id="email" name="email" type="email" class="custom-input" placeholder="nama@santri.ac.id" required>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Jurusan (Interactive Radio Cards) -->
+                <div class="field-group">
+                    <label class="field-label">
+                        Program Jurusan <span>*</span>
+                    </label>
+                    <div class="radio-grid">
+                        <label class="custom-radio-card">
+                            <input name="jurusan" type="radio" value="Software Development" checked required>
+                            <div class="radio-content">
+                                <i class="fa-solid fa-code"></i>
+                                <span class="radio-title">Software Development</span>
+                            </div>
+                        </label>
+                        <label class="custom-radio-card">
+                            <input name="jurusan" type="radio" value="Digital Marketing" required>
+                            <div class="radio-content">
+                                <i class="fa-solid fa-bullhorn"></i>
+                                <span class="radio-title">Digital Marketing</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Matakuliah (Custom Styled Select) -->
+                <div class="field-group">
+                    <label for="matakuliah" class="field-label">
+                        Matakuliah Pilihan <span>*</span>
+                    </label>
+                    <div class="input-wrapper select-wrapper">
+                        <i class="fa-solid fa-book-bookmark input-icon"></i>
+                        <select id="matakuliah" name="matakuliah" class="custom-select" required>
+                            <option value="" disabled selected>Pilih salah satu matakuliah...</option>
+                            <option value="Web Design">Web Design & UI/UX</option>
+                            <option value="Database SQL">Database SQL & Management</option>
+                            <option value="Pemrograman PHP">Pemrograman Web PHP</option>
+                            <option value="Pemrograman Python">Pemrograman Python & Data</option>
+                        </select>
+                        <i class="fa-solid fa-chevron-down select-arrow"></i>
+                    </div>
+                </div>
+
+                <!-- Hobi (Interactive Badge Checkboxes) -->
+                <div class="field-group">
+                    <label class="field-label">Hobi & Minat</label>
+                    <div class="hobi-grid">
+                        <label class="custom-checkbox-badge">
+                            <input name="hobi" type="checkbox" value="Mancing">
+                            <div class="checkbox-box">
+                                <i class="fa-solid fa-fish-fins"></i>
+                                <span>Mancing</span>
+                            </div>
+                        </label>
+                        <label class="custom-checkbox-badge">
+                            <input name="hobi" type="checkbox" value="Olahraga">
+                            <div class="checkbox-box">
+                                <i class="fa-solid fa-dumbbell"></i>
+                                <span>Olahraga</span>
+                            </div>
+                        </label>
+                        <label class="custom-checkbox-badge">
+                            <input name="hobi" type="checkbox" value="Membaca">
+                            <div class="checkbox-box">
+                                <i class="fa-solid fa-book-open"></i>
+                                <span>Membaca</span>
+                            </div>
+                        </label>
+                        <label class="custom-checkbox-badge">
+                            <input name="hobi" type="checkbox" value="Menonton">
+                            <div class="checkbox-box">
+                                <i class="fa-solid fa-film"></i>
+                                <span>Menonton</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Alamat (Textarea) -->
+                <div class="field-group">
+                    <label for="alamat" class="field-label">Alamat Lengkap</label>
+                    <textarea id="alamat" name="alamat" class="custom-textarea" placeholder="Tuliskan nama jalan, RT/RW, kelurahan, kecamatan, dan kota asal..."></textarea>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="submit-section">
+                    <button type="submit" class="btn-submit">
+                        <span>Kirim Biodata Mahasantri</span>
+                        <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+
+    <!-- Notification Modal Toast -->
+    <div id="toastNotification" class="toast-notify">
+        <i class="fa-solid fa-circle-check"></i>
+        <div>
+            <strong style="display:block; font-size: 0.95rem;">Berhasil Terkirim!</strong>
+            <span style="font-size: 0.82rem; opacity: 0.9;">Biodata mahasantri telah tersimpan di sistem.</span>
+        </div>
+    </div>
+
+    <script>
+        // Toggle Dark Mode / Light Mode
+        const themeToggleBtn = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const body = document.body;
+
+        themeToggleBtn.addEventListener('click', () => {
+            const currentTheme = body.getAttribute('data-theme');
+            if (currentTheme === 'dark') {
+                body.setAttribute('data-theme', 'light');
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            }
+        });
+
+        // Form Submission Interaction
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            const toast = document.getElementById('toastNotification');
+            toast.classList.add('show');
+
+            // Sembunyikan notifikasi setelah 4 detik
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 4000);
+        }
+    </script>
+</body>
+</html>
